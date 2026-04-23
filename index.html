@@ -1,405 +1,666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Chris's Morning Briefing</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chris Clark - Morning Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-header{background:linear-gradient(135deg,#1a1d2e 0%,#16213e 100%);border-bottom:1px solid #2d3748;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.header-title{font-size:19px;font-weight:700;letter-spacing:-.5px}
-.header-title span{color:#63b3ed}
-.header-right{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.header-date{font-size:13px;color:#a0aec0}
-#restore-btn{display:none;align-items:center;gap:6px;background:#2d3748;border:1px solid #4a5568;color:#e2e8f0;font-size:12px;font-weight:600;padding:5px 12px;border-radius:6px;cursor:pointer}
-#restore-btn:hover{background:#4a5568}
-#restore-badge{background:#f56565;color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+        :root {
+            color-scheme: dark;
+            --bg-body: #0f1117;
+            --bg-card: #1a1d2e;
+            --border-color: #2d3748;
+            --text-primary: #e2e8f0;
+            --text-muted: #718096;
+            --accent: #63b3ed;
+            --green: #48bb78;
+            --amber: #f6ad55;
+            --red: #fc8181;
+        }
 
-.container{max-width:1180px;margin:0 auto;padding:32px 20px}
-.section{margin-bottom:44px}
-.section-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid #2d3748}
-.section-icon{font-size:22px;line-height:1}
-.section-title{font-size:18px;font-weight:700;color:#f7fafc}
-.section-subtitle{font-size:12px;color:#718096;margin-left:auto}
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
 
-/* dismiss */
-.dismissible{position:relative}
-.dismiss-btn{position:absolute;top:9px;right:9px;width:20px;height:20px;background:#2d3748;border:none;border-radius:50%;color:#a0aec0;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;flex-shrink:0}
-.dismiss-btn:hover{background:#4a5568;color:#f7fafc}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-/* alerts */
-.alert{border-radius:10px;padding:14px 18px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;position:relative}
-.alert-red{background:#2d1a1a;border:1px solid #c53030}
-.alert-amber{background:#2d2100;border:1px solid #b7791f}
-.alert-green{background:#1c2d22;border:1px solid #276749}
-.alert-icon{font-size:18px;flex-shrink:0;padding-top:1px}
-.alert-body{flex:1;padding-right:24px}
-.alert-title{font-size:14px;font-weight:700;margin-bottom:5px}
-.alert-red .alert-title{color:#fc8181}
-.alert-amber .alert-title{color:#f6ad55}
-.alert-green .alert-title{color:#68d391}
-.alert-text{font-size:13px;color:#a0aec0;line-height:1.6}
-.alert-text strong{color:#e2e8f0}
-.action-list{list-style:none;font-size:13px;color:#e2e8f0;line-height:1.9;margin-top:4px}
-.action-list li::before{content:'→ ';color:#f6ad55}
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-/* TfL status cards */
-.tfl-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
-.tfl-big{background:#1a1d2e;border:1px solid #2d3748;border-radius:12px;padding:20px 22px;display:flex;align-items:center;gap:16px;position:relative}
-.tfl-big.good{border-left:5px solid #48bb78}
-.tfl-big.amber{border-left:5px solid #f6ad55}
-.tfl-big.red{border-left:5px solid #fc8181}
-.tfl-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0}
-.dot-green{background:#48bb78;box-shadow:0 0 8px #48bb7880}
-.dot-amber{background:#f6ad55;box-shadow:0 0 8px #f6ad5580}
-.dot-red{background:#fc8181;box-shadow:0 0 8px #fc818180}
-.tfl-info{flex:1}
-.tfl-line-name{font-size:16px;font-weight:700;color:#f7fafc;margin-bottom:2px}
-.tfl-status-text{font-size:13px;font-weight:600}
-.text-green{color:#68d391}
-.text-amber{color:#f6ad55}
-.text-red{color:#fc8181}
-.tfl-detail{font-size:12px;color:#718096;margin-top:4px;line-height:1.5}
-.tfl-checked{font-size:11px;color:#4a5568;margin-top:12px;text-align:right}
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
 
-/* cards grid */
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:13px}
-.card{background:#1a1d2e;border:1px solid #2d3748;border-radius:10px;padding:16px;border-left:4px solid #4a5568;transition:transform .15s;position:relative}
-.card:hover{transform:translateY(-2px)}
-.card.finance{border-left-color:#f6ad55}
-.card.academic{border-left-color:#63b3ed}
-.card.events{border-left-color:#68d391}
-.card.wellbeing{border-left-color:#fc8181}
-.card.schedule{border-left-color:#9f7aea}
-.card.coparenting{border-left-color:#f6ad55}
-.card.competition{border-left-color:#9f7aea}
-.card.social{border-left-color:#68d391}
-.card.booking{border-left-color:#63b3ed}
-.card.admin{border-left-color:#f6ad55}
-.card.newsletter{border-left-color:#4a5568}
-.card.done{border-left-color:#48bb78}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px;gap:6px}
-.card-subject{font-size:14px;font-weight:600;color:#f7fafc;line-height:1.4;padding-right:24px}
-.tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0}
-.tag-finance{background:#7b4a0a;color:#fbd38d}
-.tag-academic{background:#1a365d;color:#90cdf4}
-.tag-events{background:#1c4532;color:#9ae6b4}
-.tag-wellbeing{background:#63171b;color:#feb2b2}
-.tag-schedule{background:#3b2c5e;color:#d6bcfa}
-.tag-coparenting{background:#7b4a0a;color:#fbd38d}
-.tag-competition{background:#3b2c5e;color:#d6bcfa}
-.tag-social{background:#1c4532;color:#9ae6b4}
-.tag-booking{background:#1a365d;color:#90cdf4}
-.tag-admin{background:#7b4a0a;color:#fbd38d}
-.tag-newsletter{background:#2d3748;color:#a0aec0}
-.tag-done{background:#1c4532;color:#68d391}
-.card-date{font-size:11px;color:#718096;margin-bottom:8px}
-.card-body{font-size:13px;color:#a0aec0;line-height:1.55}
-.action-flag{display:flex;align-items:center;gap:5px;margin-top:9px;font-size:12px;font-weight:600;color:#fc8181}
+        h1 .accent {
+            color: var(--accent);
+        }
 
-/* calendar strip */
-.cal-strip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.cal-item{background:#1a1d2e;border:1px solid #2d3748;border-radius:8px;padding:10px 14px;min-width:140px;position:relative}
-.cal-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:#9f7aea;border-radius:8px 8px 0 0}
-.cal-date{font-size:11px;color:#9f7aea;font-weight:700;margin-bottom:3px}
-.cal-event{font-size:13px;font-weight:600;color:#f7fafc}
-.cal-detail{font-size:11px;color:#718096;margin-top:2px}
+        .date-display {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
 
-footer{text-align:center;padding:24px;font-size:11px;color:#4a5568;border-top:1px solid #2d3748}
-</style>
+        .restore-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .restore-btn:hover {
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 6px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-emoji {
+            font-size: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .section-tags {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .alert-banner {
+            background-color: rgba(252, 129, 129, 0.1);
+            border-left: 4px solid var(--red);
+            padding: 12px 16px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .alert-banner .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .alert-banner .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .alert-title {
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .alert-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .alert-item {
+            font-size: 14px;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .alert-item::before {
+            content: "→";
+            color: var(--amber);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .action-card {
+            background: rgba(99, 179, 237, 0.05);
+            border: 1px solid rgba(99, 179, 237, 0.2);
+            border-radius: 6px;
+            padding: 12px;
+            position: relative;
+        }
+
+        .action-card.hidden {
+            display: none;
+        }
+
+        .action-card .close-btn {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .action-card .close-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .action-card-title {
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .action-card-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 13px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 16px;
+            position: relative;
+        }
+
+        .card.hidden {
+            display: none;
+        }
+
+        .card.fade-out {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .card-tag {
+            display: inline-block;
+            background: rgba(166, 153, 78, 0.2);
+            color: var(--amber);
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .card-tag.academic {
+            background: rgba(99, 179, 237, 0.15);
+            color: var(--accent);
+        }
+
+        .card-tag.finance {
+            background: rgba(72, 187, 120, 0.15);
+            color: var(--green);
+        }
+
+        .card-tag.events {
+            background: rgba(245, 101, 101, 0.15);
+            color: var(--red);
+        }
+
+        .card-tag.booking {
+            background: rgba(99, 179, 237, 0.15);
+            color: var(--accent);
+        }
+
+        .card-tag.admin {
+            background: rgba(166, 153, 78, 0.2);
+            color: var(--amber);
+        }
+
+        .card-tag.newsletter {
+            background: rgba(166, 153, 78, 0.2);
+            color: var(--amber);
+        }
+
+        .card-date {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .card-alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: rgba(252, 129, 129, 0.05);
+            border-left: 2px solid var(--red);
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--red);
+        }
+
+        .card-close {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-close:hover {
+            color: var(--text-primary);
+        }
+
+        .section-icon {
+            font-size: 22px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .status-good {
+            background: rgba(72, 187, 120, 0.2);
+            color: var(--green);
+        }
+
+        .status-disruption {
+            background: rgba(246, 173, 85, 0.2);
+            color: var(--amber);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .date-display {
+                margin-top: 10px;
+            }
+
+            .section-tags {
+                margin-left: 0;
+                display: block;
+                margin-top: 10px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Chris's <span class="accent">Morning Briefing</span></h1>
+            <div>
+                <div class="date-display" id="dateDisplay">Wednesday, 23 April 2026</div>
+                <button class="restore-btn" id="restoreBtn" style="display: none;">Restore Dismissed Cards</button>
+            </div>
+        </header>
 
-<header>
-  <div class="header-title">Chris's <span>Morning Briefing</span></div>
-  <div class="header-right">
-    <div class="header-date">Tuesday, 22 April 2026</div>
-    <button id="restore-btn" onclick="restoreAll()">↩ Restore dismissed <span id="restore-badge"></span></button>
-  </div>
-</header>
+        <!-- EMELIA SECTION -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-emoji">👧</span>
+                <h2 class="section-title">Emelia</h2>
+                <div class="section-tags">Glendower School • Schedule • Co-parenting</div>
+            </div>
 
-<div class="container">
+            <div class="alert-banner" data-id="emelia-alerts">
+                <div class="alert-title">
+                    🔴 Action Items — Emelia
+                    <button class="close-btn" onclick="dismissCard('emelia-alerts')">×</button>
+                </div>
+                <div class="alert-items">
+                    <div class="alert-item">Glendower 2026-27 fee schedule — review and plan payment arrangements</div>
+                    <div class="alert-item">Upcoming school applications — monitor email for responses</div>
+                    <div class="alert-item">DoodleEnglish & DoodleMaths login — encourage Emelia to log in weekly</div>
+                </div>
+            </div>
 
-<!-- ═══════ 1. EMELIA ═══════ -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-icon">👧</div>
-    <div class="section-title">Emelia</div>
-    <div class="section-subtitle">Glendower School · Schedule · Co-parenting</div>
-  </div>
+            <div class="action-cards">
+                <div class="action-card" data-id="emelia-action-1">
+                    <button class="close-btn" onclick="dismissCard('emelia-action-1')">×</button>
+                    <div class="action-card-title">Upcoming</div>
+                    <div class="action-card-text">Glendower 2026-27 Fee Schedule</div>
+                </div>
+                <div class="action-card" data-id="emelia-action-2">
+                    <button class="close-btn" onclick="dismissCard('emelia-action-2')">×</button>
+                    <div class="action-card-title">Check Calendar</div>
+                    <div class="action-card-text">Emelia School Calendar</div>
+                </div>
+            </div>
 
-  <div class="alert alert-red dismissible" id="em-action">
-    <button class="dismiss-btn" onclick="dismiss('em-action')">×</button>
-    <div class="alert-icon">🔴</div>
-    <div class="alert-body">
-      <div class="alert-title">Action Items — Emelia</div>
-      <ul class="action-list">
-        <li><strong>Kensington Prep continued-interest letters</strong> sent to Miss Care &amp; Miss Floyd yesterday — watch for reply</li>
-        <li><strong>Glendower 2026–27 fee schedule</strong> published — review new rates</li>
-        <li><strong>DoodleEnglish &amp; DoodleMaths</strong> — Emelia hasn't logged in recently, worth a nudge</li>
-      </ul>
-    </div>
-  </div>
+            <div class="cards">
+                <div class="card" data-id="glendower-fees">
+                    <div class="card-header">
+                        <div class="card-title">Glendower 2026-27 Fee Schedule</div>
+                        <span class="card-tag finance">Finance</span>
+                    </div>
+                    <div class="card-date">2026 • From: Glendower School</div>
+                    <div class="card-text">The updated fee schedule for the 2026-27 academic year has been published. Review the new rates and plan payment arrangements accordingly.</div>
+                    <div class="card-alert">⚠️ Review and plan payments</div>
+                    <button class="card-close" onclick="dismissCard('glendower-fees')">×</button>
+                </div>
 
-  <!-- Upcoming calendar events -->
-  <div class="cal-strip">
-    <div class="cal-item dismissible" id="em-cal1">
-      <button class="dismiss-btn" onclick="dismiss('em-cal1')">×</button>
-      <div class="cal-date">Upcoming</div>
-      <div class="cal-event">Kensington Prep Response</div>
-      <div class="cal-detail">Watch for reply from Miss Care / Miss Floyd</div>
-    </div>
-    <div class="cal-item dismissible" id="em-cal2">
-      <button class="dismiss-btn" onclick="dismiss('em-cal2')">×</button>
-      <div class="cal-date">Check calendar</div>
-      <div class="cal-event">Emelia activities</div>
-      <div class="cal-detail">Review upcoming events in next 30 days</div>
-    </div>
-  </div>
+                <div class="card" data-id="school-applications">
+                    <div class="card-header">
+                        <div class="card-title">School Application Status</div>
+                        <span class="card-tag academic">Academic</span>
+                    </div>
+                    <div class="card-date">Ongoing • From: Schools</div>
+                    <div class="card-text">Monitor inbox for responses from Kensington Prep and other schools. Ensure all required documentation is submitted and watch for interview invitations.</div>
+                    <div class="card-alert">⚠️ Monitor inbox for responses</div>
+                    <button class="card-close" onclick="dismissCard('school-applications')">×</button>
+                </div>
 
-  <div class="cards">
+                <div class="card" data-id="doodle-login">
+                    <div class="card-header">
+                        <div class="card-title">DoodleEnglish & DoodleMaths</div>
+                        <span class="card-tag academic">Academic</span>
+                    </div>
+                    <div class="card-date">Recent • From: Doodle</div>
+                    <div class="card-text">Encourage Emelia to log in to DoodleEnglish and DoodleMaths regularly for practice. These platforms help reinforce learning alongside school lessons.</div>
+                    <div class="card-alert">⚠️ Encourage weekly login</div>
+                    <button class="card-close" onclick="dismissCard('doodle-login')">×</button>
+                </div>
 
-    <div class="card academic dismissible" id="em1">
-      <button class="dismiss-btn" onclick="dismiss('em1')">×</button>
-      <div class="card-top"><div class="card-subject">Kensington Prep — Continued Interest Letters</div><span class="tag tag-academic">Academic</span></div>
-      <div class="card-date">21 April 2026</div>
-      <div class="card-body">Letters expressing continued interest in Emelia's application were sent to Miss Care and Miss Floyd at Kensington Prep yesterday. Awaiting a response — this is a key milestone in the school transition process.</div>
-      <div class="action-flag">⚠️ Watch inbox for reply</div>
-    </div>
+                <div class="card" data-id="coparenting-comms">
+                    <div class="card-header">
+                        <div class="card-title">Co-parenting Communication</div>
+                        <span class="card-tag coparenting">Co-parenting</span>
+                    </div>
+                    <div class="card-date">Ongoing • From: Honglin</div>
+                    <div class="card-text">Maintain regular communication with Honglin regarding Emelia's schedule, school updates, and upcoming arrangements. Coordinate any schedule changes in advance.</div>
+                    <button class="card-close" onclick="dismissCard('coparenting-comms')">×</button>
+                </div>
+            </div>
+        </section>
 
-    <div class="card finance dismissible" id="em2">
-      <button class="dismiss-btn" onclick="dismiss('em2')">×</button>
-      <div class="card-top"><div class="card-subject">Glendower 2026–27 Fee Schedule</div><span class="tag tag-finance">Finance</span></div>
-      <div class="card-date">April 2026 · From: Glendower School</div>
-      <div class="card-body">The updated fee schedule for the 2026–27 academic year has been shared by the bursar. Review the new rates and plan payment arrangements accordingly.</div>
-      <div class="action-flag">⚠️ Review and plan payments</div>
-    </div>
+        <!-- TRANSPORT FOR LONDON SECTION -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-emoji">🚇</span>
+                <h2 class="section-title">Transport for London</h2>
+            </div>
 
-    <div class="card academic dismissible" id="em3">
-      <button class="dismiss-btn" onclick="dismiss('em3')">×</button>
-      <div class="card-top"><div class="card-subject">DoodleEnglish &amp; DoodleMaths — Login Reminder</div><span class="tag tag-academic">Academic</span></div>
-      <div class="card-date">Recent · From: Glendower School</div>
-      <div class="card-body">The school has flagged that Emelia has not logged into DoodleEnglish or DoodleMaths recently. Regular practice is encouraged as part of their home-learning programme.</div>
-      <div class="action-flag">⚠️ Encourage Emelia to log in</div>
-    </div>
+            <div class="cards">
+                <div class="card" data-id="mildmay-status">
+                    <div class="card-header">
+                        <div class="card-title">Mildmay Line</div>
+                        <span class="card-tag">TFL</span>
+                    </div>
+                    <div class="card-text">London Overground service</div>
+                    <span class="status-badge status-good">Good Service</span>
+                    <button class="card-close" onclick="dismissCard('mildmay-status')">×</button>
+                </div>
 
-    <div class="card coparenting dismissible" id="em4">
-      <button class="dismiss-btn" onclick="dismiss('em4')">×</button>
-      <div class="card-top"><div class="card-subject">Coordination with Honglin</div><span class="tag tag-coparenting">Co-parenting</span></div>
-      <div class="card-date">Recent · From: Honglin</div>
-      <div class="card-body">Recent emails from Honglin relating to Emelia's schedule and upcoming arrangements. Check for any logistics that need confirming or responding to.</div>
-    </div>
+                <div class="card" data-id="district-status">
+                    <div class="card-header">
+                        <div class="card-title">District Line</div>
+                        <span class="card-tag">TFL</span>
+                    </div>
+                    <div class="card-text">London Underground service</div>
+                    <span class="status-badge status-good">Good Service</span>
+                    <button class="card-close" onclick="dismissCard('district-status')">×</button>
+                </div>
+            </div>
+        </section>
 
-    <div class="card events dismissible" id="em5">
-      <button class="dismiss-btn" onclick="dismiss('em5')">×</button>
-      <div class="card-top"><div class="card-subject">Glendower School — Spring Term Events</div><span class="tag tag-events">Events</span></div>
-      <div class="card-date">April 2026 · From: Glendower School</div>
-      <div class="card-body">Updates on upcoming school events including end-of-term activities, sports days, and any performances. Check the school calendar for specific dates.</div>
-    </div>
+        <!-- CADDI CLUB SECTION -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-emoji">⛳</span>
+                <h2 class="section-title">Caddi Club</h2>
+                <div class="section-tags">Bookings • Payments • Social</div>
+            </div>
 
-    <div class="card wellbeing dismissible" id="em6">
-      <button class="dismiss-btn" onclick="dismiss('em6')">×</button>
-      <div class="card-top"><div class="card-subject">Emelia's Wellbeing Update</div><span class="tag tag-wellbeing">Wellbeing</span></div>
-      <div class="card-date">Recent · From: Glendower School</div>
-      <div class="card-body">School pastoral team notes Emelia is settled and engaged. Elbow continues to be monitored — no concerns flagged at this stage.</div>
-    </div>
+            <div class="cards">
+                <div class="card" data-id="caddi-payment">
+                    <div class="card-header">
+                        <div class="card-title">Upcoming Direct Debit Payment</div>
+                        <span class="card-tag finance">Finance</span>
+                    </div>
+                    <div class="card-date">Due: 27 April 2026</div>
+                    <div class="card-text">Caddi Club Chelsea is charging £7.50 via Direct Debit. Payment will be debited on or shortly after April 27, 2026. Appears as "CaddiClub Chelsea" on your statement.</div>
+                    <button class="card-close" onclick="dismissCard('caddi-payment')">×</button>
+                </div>
 
-  </div>
-</section>
+                <div class="card" data-id="caddi-bookings">
+                    <div class="card-header">
+                        <div class="card-title">Recent Bookings</div>
+                        <span class="card-tag booking">Booking</span>
+                    </div>
+                    <div class="card-date">April 2026</div>
+                    <div class="card-text">Multiple Bay 3 Peak bookings confirmed at Caddi Club Chelsea. Please cancel if unable to attend to courtesy to other members.</div>
+                    <button class="card-close" onclick="dismissCard('caddi-bookings')">×</button>
+                </div>
 
-<!-- ═══════ 2. TFL ═══════ -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-icon">🚇</div>
-    <div class="section-title">Transport for London</div>
-    <div class="section-subtitle">Mildmay &amp; District lines · Live status</div>
-  </div>
+                <div class="card" data-id="caddi-events">
+                    <div class="card-header">
+                        <div class="card-title">The Masters Event at Wimbledon</div>
+                        <span class="card-tag events">Events</span>
+                    </div>
+                    <div class="card-date">Friday, 10 April 2026 (Past)</div>
+                    <div class="card-text">The Masters Event at Wimbledon with Wimbledon Caddi Club was scheduled for 7:00 PM. This was a previous event.</div>
+                    <button class="card-close" onclick="dismissCard('caddi-events')">×</button>
+                </div>
+            </div>
+        </section>
 
-  <div class="alert alert-red dismissible" id="tfl-alert">
-    <button class="dismiss-btn" onclick="dismiss('tfl-alert')">×</button>
-    <div class="alert-icon">🚨</div>
-    <div class="alert-body">
-      <div class="alert-title">District Line Suspended — RMT Strike Action Today</div>
-      <div class="alert-text">The District line has <strong>no service</strong> today due to ongoing RMT industrial action. Allow significantly more time for your commute and consider alternative routes via the Elizabeth line or surface buses. The Mildmay line is running but expect higher than usual crowding from displaced District line passengers.</div>
-    </div>
-  </div>
+        <!-- MALDEN GOLF CLUB SECTION -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-emoji">🏌️</span>
+                <h2 class="section-title">Malden Golf Club</h2>
+                <div class="section-tags">Competitions • Subscriptions • Updates</div>
+            </div>
 
-  <div class="tfl-pair">
-    <div class="tfl-big amber dismissible" id="tfl-mildmay">
-      <button class="dismiss-btn" onclick="dismiss('tfl-mildmay')">×</button>
-      <div class="tfl-dot dot-amber"></div>
-      <div class="tfl-info">
-        <div class="tfl-line-name">🟠 Mildmay Line</div>
-        <div class="tfl-status-text text-amber">Good Service — Expect Crowding</div>
-        <div class="tfl-detail">Running normally following yesterday's South Acton fire alert disruption. Expect heavier than usual passenger loads today due to District line suspension.</div>
-      </div>
-    </div>
-    <div class="tfl-big red dismissible" id="tfl-district">
-      <button class="dismiss-btn" onclick="dismiss('tfl-district')">×</button>
-      <div class="tfl-dot dot-red"></div>
-      <div class="tfl-info">
-        <div class="tfl-line-name">🟢 District Line</div>
-        <div class="tfl-status-text text-red">Suspended — RMT Strike</div>
-        <div class="tfl-detail">No service today. RMT industrial action affects the full line. Check tfl.gov.uk for latest updates and planned return to service.</div>
-      </div>
-    </div>
-  </div>
-  <div class="tfl-checked">Last checked: 22 April 2026 · Source: TfL / web search</div>
-</section>
+            <div class="alert-banner" data-id="malden-alerts">
+                <div class="alert-title">
+                    📌 Upcoming Deadlines
+                    <button class="close-btn" onclick="dismissCard('malden-alerts')">×</button>
+                </div>
+                <div class="alert-items">
+                    <div class="alert-item">Rose & Thistle sign-up closes Sunday, 26 April — limited spots available</div>
+                    <div class="alert-item">2026-27 subscription bill available to view — review and plan payment</div>
+                </div>
+            </div>
 
-<!-- ═══════ 3. CADDI CLUB ═══════ -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-icon">🏌️</div>
-    <div class="section-title">Caddi Club</div>
-    <div class="section-subtitle">Caddi Club Chelsea · Bookings &amp; Events</div>
-  </div>
+            <div class="cards">
+                <div class="card" data-id="rose-thistle">
+                    <div class="card-header">
+                        <div class="card-title">Rose & Thistle – 75th Year</div>
+                        <span class="card-tag competition">Competition</span>
+                    </div>
+                    <div class="card-date">Deadline: Sunday, 26 April 2026</div>
+                    <div class="card-text">Annual Rose & Thistle competition marking 75 years. Online sign-up closes this Sunday. Don't miss the opportunity to participate in this special milestone event.</div>
+                    <div class="card-alert">⚠️ Sign-up closes Sunday</div>
+                    <button class="card-close" onclick="dismissCard('rose-thistle')">×</button>
+                </div>
 
-  <div class="alert alert-amber dismissible" id="caddi-action">
-    <button class="dismiss-btn" onclick="dismiss('caddi-action')">×</button>
-    <div class="alert-icon">💳</div>
-    <div class="alert-body">
-      <div class="alert-title">Payment &amp; Booking Note</div>
-      <div class="alert-text"><strong>£7.50 Direct Debit</strong> from Caddi Club Chelsea is due on <strong>27 April</strong> — lands in a few days. No upcoming bay sessions booked — worth scheduling your next visit.</div>
-    </div>
-  </div>
+                <div class="card" data-id="members-presentation">
+                    <div class="card-header">
+                        <div class="card-title">Members Information Evening Presentation</div>
+                        <span class="card-tag admin">Admin</span>
+                    </div>
+                    <div class="card-date">21 April 2026 • From: Malden Golf Club</div>
+                    <div class="card-text">Presentation file from the recent member's information evening is available to view. Check email for the link to access the presentation materials.</div>
+                    <button class="card-close" onclick="dismissCard('members-presentation')">×</button>
+                </div>
 
-  <div class="cards">
+                <div class="card" data-id="subscription-bill">
+                    <div class="card-header">
+                        <div class="card-title">2026-27 Subscription Bill</div>
+                        <span class="card-tag finance">Finance</span>
+                    </div>
+                    <div class="card-date">20 April 2026 • From: Malden Golf Club</div>
+                    <div class="card-text">Your 2026-27 subscription bill is now available online. Review the charges and plan your payment arrangement accordingly.</div>
+                    <button class="card-close" onclick="dismissCard('subscription-bill')">×</button>
+                </div>
 
-    <div class="card finance dismissible" id="caddi1">
-      <button class="dismiss-btn" onclick="dismiss('caddi1')">×</button>
-      <div class="card-top"><div class="card-subject">Caddi Club Chelsea — Direct Debit Notification</div><span class="tag tag-finance">Finance</span></div>
-      <div class="card-date">22 April 2026 · From: Caddi Club Chelsea</div>
-      <div class="card-body">Notification that a £7.50 Direct Debit is scheduled to be collected from your account on 27 April. This appears to be a regular membership or session charge.</div>
-    </div>
+                <div class="card" data-id="weekly-update">
+                    <div class="card-header">
+                        <div class="card-title">Weekly Club Update</div>
+                        <span class="card-tag newsletter">Newsletter</span>
+                    </div>
+                    <div class="card-date">20 April 2026 • From: Foremost Golf</div>
+                    <div class="card-text">This week's update from Malden Golf Club to help you get prepared for the season ahead. Check for tips and upcoming events.</div>
+                    <button class="card-close" onclick="dismissCard('weekly-update')">×</button>
+                </div>
 
-    <div class="card booking dismissible" id="caddi2">
-      <button class="dismiss-btn" onclick="dismiss('caddi2')">×</button>
-      <div class="card-top"><div class="card-subject">Book Your Next Bay Session</div><span class="tag tag-booking">Booking</span></div>
-      <div class="card-date">Reminder</div>
-      <div class="card-body">No upcoming Caddi Club sessions found in your calendar or recent booking confirmations. Bay sessions at Caddi Club Chelsea can be booked via their app or website.</div>
-      <div class="action-flag">⚠️ Consider booking your next session</div>
-    </div>
-
-    <div class="card newsletter dismissible" id="caddi3">
-      <button class="dismiss-btn" onclick="dismiss('caddi3')">×</button>
-      <div class="card-top"><div class="card-subject">Caddi Club — Latest News &amp; Events</div><span class="tag tag-newsletter">Newsletter</span></div>
-      <div class="card-date">Recent · From: Caddi Club Chelsea</div>
-      <div class="card-body">Recent communications from Caddi Club Chelsea covering club news, upcoming events, and any member updates. Check for any competitions or social events you may want to enter.</div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════ 4. MALDEN GOLF CLUB ═══════ -->
-<section class="section">
-  <div class="section-header">
-    <div class="section-icon">⛳</div>
-    <div class="section-title">Malden Golf Club</div>
-    <div class="section-subtitle">Competitions · Bookings · Social</div>
-  </div>
-
-  <div class="alert alert-red dismissible" id="mgc-action">
-    <button class="dismiss-btn" onclick="dismiss('mgc-action')">×</button>
-    <div class="alert-icon">🔴</div>
-    <div class="alert-body">
-      <div class="alert-title">Urgent — Deadlines This Week</div>
-      <ul class="action-list">
-        <li><strong>Rose &amp; Thistle sign-up closes Sunday 26 April</strong> — 75th year running, don't miss it</li>
-        <li><strong>2026–27 subscriptions bill</strong> — now available, arrange payment</li>
-        <li><strong>Fitzgeorge Singles Cup</strong> — arrange match vs Ronan McIntyre (HI: 8.5)</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cards">
-
-    <div class="card competition dismissible" id="mgc1">
-      <button class="dismiss-btn" onclick="dismiss('mgc1')">×</button>
-      <div class="card-top"><div class="card-subject">Rose &amp; Thistle — Sign-up Closing Sunday</div><span class="tag tag-competition">Competition</span></div>
-      <div class="card-date">Deadline: Sunday 26 April 2026</div>
-      <div class="card-body">Sign-up for the Rose &amp; Thistle competition closes this Sunday. This is the 75th year the competition has run — a significant club event. Sign up via the club portal or pro shop before the deadline.</div>
-      <div class="action-flag">⚠️ Sign up before Sunday 26 April</div>
-    </div>
-
-    <div class="card finance dismissible" id="mgc2">
-      <button class="dismiss-btn" onclick="dismiss('mgc2')">×</button>
-      <div class="card-top"><div class="card-subject">2026–27 Annual Subscriptions</div><span class="tag tag-finance">Finance</span></div>
-      <div class="card-date">April 2026 · From: Malden Golf Club</div>
-      <div class="card-body">Your 2026–27 subscription bill is now available. Payment can be made via bank transfer or at the clubhouse. Check the email for the deadline and payment details.</div>
-      <div class="action-flag">⚠️ Arrange payment</div>
-    </div>
-
-    <div class="card competition dismissible" id="mgc3">
-      <button class="dismiss-btn" onclick="dismiss('mgc3')">×</button>
-      <div class="card-top"><div class="card-subject">Fitzgeorge Singles Cup — Round 1 Draw</div><span class="tag tag-competition">Competition</span></div>
-      <div class="card-date">April 2026 · From: Malden Golf Club</div>
-      <div class="card-body">You have been drawn against Ronan McIntyre (handicap index 8.5) in Round 1 of the Fitzgeorge Singles Cup. Contact Ronan directly to arrange a mutually convenient date within the round deadline.</div>
-      <div class="action-flag">⚠️ Contact Ronan McIntyre to arrange match</div>
-    </div>
-
-    <div class="card admin dismissible" id="mgc4">
-      <button class="dismiss-btn" onclick="dismiss('mgc4')">×</button>
-      <div class="card-top"><div class="card-subject">Sports Psychology Research — Stephen Davies</div><span class="tag tag-admin">Admin</span></div>
-      <div class="card-date">April 2026 · From: Stephen Davies</div>
-      <div class="card-body">Stephen Davies (MSc Sports Psychology) is seeking club member volunteers to participate in his research study. The email outlines the time commitment and how to sign up if interested.</div>
-      <div class="action-flag">⚠️ Review and respond if interested</div>
+                <div class="card" data-id="research-participation">
+                    <div class="card-header">
+                        <div class="card-title">Sports Psychology Research Study</div>
+                        <span class="card-tag admin">Admin</span>
+                    </div>
+                    <div class="card-date">20 April 2026 • From: Stephen Davies</div>
+                    <div class="card-text">Invitation to participate in a Sports Psychology MSc research project at University of Madrid exploring psychological factors in golf. Research explores self-confidence and performance.</div>
+                    <button class="card-close" onclick="dismissCard('research-participation')">×</button>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div class="card competition dismissible" id="mgc5">
-      <button class="dismiss-btn" onclick="dismiss('mgc5')">×</button>
-      <div class="card-top"><div class="card-subject">Spring Stableford Results</div><span class="tag tag-competition">Competition</span></div>
-      <div class="card-date">April 2026 · From: Malden Golf Club</div>
-      <div class="card-body">Results from the recent Spring Stableford competition have been published. Check the leaderboard on the member portal or club noticeboard to see the full results.</div>
-    </div>
+    <script>
+        const dismissedCards = new Set();
 
-    <div class="card newsletter dismissible" id="mgc6">
-      <button class="dismiss-btn" onclick="dismiss('mgc6')">×</button>
-      <div class="card-top"><div class="card-subject">Club Update from Ben Tebbs</div><span class="tag tag-newsletter">Newsletter</span></div>
-      <div class="card-date">Recent · From: Ben Tebbs</div>
-      <div class="card-body">Latest club update from Ben Tebbs covering course conditions, upcoming events, and any member news. Worth a read for upcoming competition schedule and any course maintenance notices.</div>
-    </div>
+        function formatDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-GB', options);
+            document.getElementById('dateDisplay').textContent = today;
+        }
 
-  </div>
-</section>
+        function dismissCard(cardId) {
+            dismissedCards.add(cardId);
+            const card = document.querySelector(`[data-id="${cardId}"]`);
+            if (card) {
+                card.classList.add('fade-out');
+                setTimeout(() => {
+                    card.classList.add('hidden');
+                }, 200);
+            }
+            updateRestoreButton();
+        }
 
-</div>
+        function updateRestoreButton() {
+            const restoreBtn = document.getElementById('restoreBtn');
+            if (dismissedCards.size > 0) {
+                restoreBtn.style.display = 'block';
+            } else {
+                restoreBtn.style.display = 'none';
+            }
+        }
 
-<footer>Chris Clark's Morning Briefing · Sources: Gmail, Google Calendar, TfL · 22 April 2026</footer>
+        document.getElementById('restoreBtn').addEventListener('click', function() {
+            dismissedCards.forEach(cardId => {
+                const card = document.querySelector(`[data-id="${cardId}"]`);
+                if (card) {
+                    card.classList.remove('hidden', 'fade-out');
+                }
+            });
+            dismissedCards.clear();
+            updateRestoreButton();
+        });
 
-<script>
-const dismissed = new Set();
-function dismiss(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.style.transition = 'opacity .22s, transform .22s';
-  el.style.opacity = '0';
-  el.style.transform = 'scale(0.97)';
-  setTimeout(() => el.style.display = 'none', 230);
-  dismissed.add(id);
-  updateBtn();
-}
-function restoreAll() {
-  dismissed.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.display = '';
-    requestAnimationFrame(() => {
-      el.style.transition = 'opacity .22s, transform .22s';
-      el.style.opacity = '1';
-      el.style.transform = 'scale(1)';
-    });
-  });
-  dismissed.clear();
-  updateBtn();
-}
-function updateBtn() {
-  const btn = document.getElementById('restore-btn');
-  document.getElementById('restore-badge').textContent = dismissed.size;
-  btn.style.display = dismissed.size > 0 ? 'flex' : 'none';
-}
-</script>
+        // Initialize
+        formatDate();
+        updateRestoreButton();
+    </script>
 </body>
 </html>

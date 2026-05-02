@@ -1,0 +1,174 @@
+{
+  "generated_at": "2026-04-23T07:00:00Z",
+  "sections": [
+    {
+      "id": "emelia",
+      "title": "Emelia",
+      "emoji": "👧",
+      "subtitle": "Glendower School • Schedule • Co-parenting",
+      "alerts": [
+        {
+          "id": "emelia-alert-actions",
+          "icon": "🔴",
+          "title": "Action Items — Emelia",
+          "items": [
+            "Glendower 2026-27 fee schedule — review and plan payment arrangements",
+            "Upcoming school applications — monitor email for responses",
+            "DoodleEnglish & DoodleMaths login — encourage Emelia to log in weekly"
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "id": "glendower-fees",
+          "title": "Glendower 2026-27 Fee Schedule",
+          "tag": "finance",
+          "date": "2026 • From: Glendower School",
+          "text": "The updated fee schedule for the 2026-27 academic year has been published. Review the new rates and plan payment arrangements accordingly.",
+          "alert": "Review and plan payments"
+        },
+        {
+          "id": "school-applications",
+          "title": "School Application Status",
+          "tag": "academic",
+          "date": "Ongoing • From: Schools",
+          "text": "Monitor inbox for responses from Kensington Prep and other schools. Ensure all required documentation is submitted and watch for interview invitations.",
+          "alert": "Monitor inbox for responses"
+        },
+        {
+          "id": "doodle-login",
+          "title": "DoodleEnglish & DoodleMaths",
+          "tag": "academic",
+          "date": "Recent • From: Doodle",
+          "text": "Encourage Emelia to log in to DoodleEnglish and DoodleMaths regularly for practice.",
+          "alert": "Encourage weekly login"
+        },
+        {
+          "id": "coparenting-comms",
+          "title": "Co-parenting Communication",
+          "tag": "personal",
+          "date": "Ongoing • From: Honglin",
+          "text": "Maintain regular communication with Honglin regarding Emelia's schedule, school updates, and upcoming arrangements. Coordinate any schedule changes in advance.",
+          "alert": null
+        }
+      ]
+    },
+    {
+      "id": "transport",
+      "title": "Transport for London",
+      "emoji": "🚇",
+      "subtitle": "",
+      "alerts": [],
+      "cards": [
+        {
+          "id": "mildmay-status",
+          "title": "Mildmay Line",
+          "tag": "default",
+          "date": null,
+          "text": "London Overground — Good Service",
+          "alert": null
+        },
+        {
+          "id": "district-status",
+          "title": "District Line",
+          "tag": "default",
+          "date": null,
+          "text": "London Underground — Good Service",
+          "alert": null
+        }
+      ]
+    },
+    {
+      "id": "caddi-club",
+      "title": "Caddi Club",
+      "emoji": "⛳",
+      "subtitle": "Bookings • Payments • Social",
+      "alerts": [],
+      "cards": [
+        {
+          "id": "caddi-payment",
+          "title": "Upcoming Direct Debit Payment",
+          "tag": "finance",
+          "date": "Due: 27 April 2026",
+          "text": "Caddi Club Chelsea is charging £7.50 via Direct Debit on or shortly after April 27, 2026. Appears as \"CaddiClub Chelsea\" on your statement.",
+          "alert": null
+        },
+        {
+          "id": "caddi-bookings",
+          "title": "Recent Bookings",
+          "tag": "booking",
+          "date": "April 2026",
+          "text": "Multiple Bay 3 Peak bookings confirmed at Caddi Club Chelsea. Please cancel if unable to attend as a courtesy to other members.",
+          "alert": null
+        },
+        {
+          "id": "caddi-events",
+          "title": "The Masters Event at Wimbledon",
+          "tag": "events",
+          "date": "Friday, 10 April 2026",
+          "text": "The Masters Event at Wimbledon with Wimbledon Caddi Club was scheduled for 7:00 PM. This was a previous event.",
+          "alert": null
+        }
+      ]
+    },
+    {
+      "id": "malden-golf",
+      "title": "Malden Golf Club",
+      "emoji": "🏌️",
+      "subtitle": "Competitions • Subscriptions • Updates",
+      "alerts": [
+        {
+          "id": "malden-alert-deadlines",
+          "icon": "📌",
+          "title": "Upcoming Deadlines",
+          "items": [
+            "Rose & Thistle sign-up closes Sunday, 26 April — limited spots available",
+            "2026-27 subscription bill available to view — review and plan payment"
+          ]
+        }
+      ],
+      "cards": [
+        {
+          "id": "rose-thistle",
+          "title": "Rose & Thistle – 75th Year",
+          "tag": "events",
+          "date": "Deadline: Sunday, 26 April 2026",
+          "text": "Annual Rose & Thistle competition marking 75 years. Online sign-up closes this Sunday. Don't miss the opportunity to participate in this special milestone event.",
+          "alert": "Sign-up closes Sunday"
+        },
+        {
+          "id": "members-presentation",
+          "title": "Members Information Evening Presentation",
+          "tag": "admin",
+          "date": "21 April 2026 • From: Malden Golf Club",
+          "text": "Presentation file from the recent member's information evening is available to view. Check email for the link to access the presentation materials.",
+          "alert": null
+        },
+        {
+          "id": "subscription-bill",
+          "title": "2026-27 Subscription Bill",
+          "tag": "finance",
+          "date": "20 April 2026 • From: Malden Golf Club",
+          "text": "Your 2026-27 subscription bill is now available online. Review the charges and plan your payment arrangement accordingly.",
+          "alert": null
+        },
+        {
+          "id": "weekly-update",
+          "title": "Weekly Club Update",
+          "tag": "newsletter",
+          "date": "20 April 2026 • From: Foremost Golf",
+          "text": "This week's update from Malden Golf Club to help you get prepared for the season ahead. Check for tips and upcoming events.",
+          "alert": null
+        },
+        {
+          "id": "research-participation",
+          "title": "Sports Psychology Research Study",
+          "tag": "admin",
+          "date": "20 April 2026 • From: Stephen Davies",
+          "text": "Invitation to participate in a Sports Psychology MSc research project at University of Madrid exploring psychological factors in golf performance.",
+          "alert": null
+        }
+      ]
+    }
+  ]
+}
